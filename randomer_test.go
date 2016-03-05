@@ -18,8 +18,24 @@ func TestCreate(t *testing.T) {
 	}
 }
 
-func TestSettings(t *testing.T) {
+func TestICanCallSettings(t *testing.T) {
 	randomer := setupRandomer()
 
 	randomer.Settings("")
+}
+
+func TestICanCallGetRandomString(t *testing.T) {
+	randomer := setupRandomer()
+
+	randomer.GetRandomString()
+}
+
+func TestIGetSomeDataFromCallingRandomString(t *testing.T) {
+	randomer := setupRandomer()
+
+	randomString := randomer.GetRandomString()
+
+	if len(randomString) == 0 {
+		t.Fail()
+	}
 }
