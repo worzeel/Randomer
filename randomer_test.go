@@ -6,32 +6,55 @@ import (
 	"github.com/worzeel/randomer"
 )
 
-func setupRandomer() *randomer.Randomer {
-	return new(randomer.Randomer)
+func setupRandomer(settings *randomer.Settings) *randomer.Randomer {
+	var s *randomer.Settings
+	if settings == nil {
+		s = new(randomer.Settings)
+	} else {
+		s = settings
+	}
+	return randomer.NewRandomer(s)
 }
 
 func TestCreate(t *testing.T) {
-	randomer := setupRandomer()
+	randomer := setupRandomer(nil)
 
 	if randomer == nil {
 		t.Fail()
 	}
 }
 
-func TestICanCallSettings(t *testing.T) {
-	randomer := setupRandomer()
+func TestICanGetSettings(t *testing.T) {
+	randomer := setupRandomer(nil)
 
-	randomer.Settings("")
+	s := randomer.GetSettings()
+
+	if s == nil {
+		t.Fail()
+	}
+}
+
+func TestICanGetSettingsIPassedIn(t *testing.T) {
+	s := new(randomer.Settings)
+
+	testChars := "ABCD"
+
+	s.SetCharacters(testChars)
+	randomer := setupRandomer(s)
+
+	if randomer.GetSettings().GetCharacters() != testChars {
+		t.Fail()
+	}
 }
 
 func TestICanCallGetRandomString(t *testing.T) {
-	randomer := setupRandomer()
+	randomer := setupRandomer(nil)
 
 	randomer.GetRandomString()
 }
 
 func TestIGetSomeDataFromCallingRandomString(t *testing.T) {
-	randomer := setupRandomer()
+	randomer := setupRandomer(nil)
 
 	randomString := randomer.GetRandomString()
 
