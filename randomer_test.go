@@ -8,28 +8,27 @@ import (
 
 func setupRandomer(settings *randomer.Settings) *randomer.Randomer {
 	var s *randomer.Settings
-	if settings == nil {
-		s = randomer.NewSettings()
-	} else {
+	if settings != nil {
 		s = settings
 	}
 	return randomer.NewRandomer(s)
 }
 
 func TestCreate(t *testing.T) {
-	randomer := setupRandomer(nil)
+	r := setupRandomer(nil)
 
-	if randomer == nil {
+	if r == nil {
 		t.Fail()
 	}
 }
 
 func TestICanGetSettings(t *testing.T) {
-	randomer := setupRandomer(nil)
+	s := randomer.NewSettings()
+	r := setupRandomer(s)
 
-	s := randomer.GetSettings()
+	gs := r.GetSettings()
 
-	if s == nil {
+	if gs == nil {
 		t.Fail()
 	}
 }
@@ -40,23 +39,22 @@ func TestICanGetSettingsIPassedIn(t *testing.T) {
 	testChars := "ABCD"
 
 	s.SetCharacters(testChars)
-	randomer := setupRandomer(s)
+	r := setupRandomer(s)
 
-	if randomer.GetSettings().GetCharacters() != testChars {
+	gs := r.GetSettings()
+	if gs == nil {
+		t.Fail()
+	}
+
+	if gs.GetCharacters() != testChars {
 		t.Fail()
 	}
 }
 
-func TestICanCallGetRandomString(t *testing.T) {
-	randomer := setupRandomer(nil)
-
-	randomer.GetRandomString()
-}
-
 func TestICanGetSomeDataFromCallingRandomString(t *testing.T) {
-	randomer := setupRandomer(nil)
+	r := setupRandomer(nil)
 
-	randomString := randomer.GetRandomString()
+	randomString := r.GetRandomString()
 
 	if len(randomString) == 0 {
 		t.Fail()
