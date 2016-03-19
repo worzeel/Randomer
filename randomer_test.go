@@ -6,10 +6,10 @@ import (
 	"github.com/worzeel/randomer"
 )
 
-func setupRandomer(settings *randomer.Settings) *randomer.Randomer {
-	var s *randomer.Settings
-	if settings != nil {
-		s = settings
+func setupRandomer(setting randomer.Setter) *randomer.Randomer {
+	var s randomer.Setter
+	if setting != nil {
+		s = setting
 	}
 	return randomer.NewRandomer(s)
 }
@@ -23,7 +23,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestICanGetSettings(t *testing.T) {
-	s := randomer.NewSettings()
+	s := randomer.NewSetting()
 	r := setupRandomer(s)
 
 	gs := r.GetSettings()
@@ -34,7 +34,7 @@ func TestICanGetSettings(t *testing.T) {
 }
 
 func TestICanGetSettingsIPassedIn(t *testing.T) {
-	s := randomer.NewSettings()
+	s := randomer.NewSetting()
 
 	testChars := "ABCD"
 
@@ -51,12 +51,12 @@ func TestICanGetSettingsIPassedIn(t *testing.T) {
 	}
 }
 
-func TestICanGetSomeDataFromCallingRandomString(t *testing.T) {
+func TestICanGetADefaultRandomStringOfTenCharacters(t *testing.T) {
 	r := setupRandomer(nil)
 
 	randomString := r.GetRandomString()
 
-	if len(randomString) == 0 {
+	if len(randomString) != 10 {
 		t.Fail()
 	}
 }
