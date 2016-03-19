@@ -9,7 +9,7 @@ import (
 func setupRandomer(settings *randomer.Settings) *randomer.Randomer {
 	var s *randomer.Settings
 	if settings == nil {
-		s = new(randomer.Settings)
+		s = randomer.NewSettings()
 	} else {
 		s = settings
 	}
@@ -35,7 +35,7 @@ func TestICanGetSettings(t *testing.T) {
 }
 
 func TestICanGetSettingsIPassedIn(t *testing.T) {
-	s := new(randomer.Settings)
+	s := randomer.NewSettings()
 
 	testChars := "ABCD"
 

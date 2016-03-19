@@ -5,6 +5,11 @@ type Settings struct {
 	characters string
 }
 
+// NewSettings - Create a new Settings
+func NewSettings() *Settings {
+	return new(Settings)
+}
+
 // SetCharacters - Set the characters
 func (s *Settings) SetCharacters(characters string) {
 	s.characters = characters
