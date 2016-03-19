@@ -53,7 +53,7 @@ func TestICanCallGetRandomString(t *testing.T) {
 	randomer.GetRandomString()
 }
 
-func TestIGetSomeDataFromCallingRandomString(t *testing.T) {
+func TestICanGetSomeDataFromCallingRandomString(t *testing.T) {
 	randomer := setupRandomer(nil)
 
 	randomString := randomer.GetRandomString()
