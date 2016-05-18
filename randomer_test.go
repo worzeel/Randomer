@@ -1,62 +1,37 @@
 package randomer_test
 
 import (
-	"testing"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 
-	"github.com/worzeel/randomer"
+	. "github.com/worzeel/randomer"
 )
 
-func setupRandomer(setting randomer.Setter) *randomer.Randomer {
-	var s randomer.Setter
-	if setting != nil {
-		s = setting
-	}
-	return randomer.NewRandomer(s)
-}
+var _ = Describe("Randomer", func() {
+	Describe("Using default settings", func() {
+		Context("Initial method calls", func() {
+			It("Should be able to be created", func() {
+				r := new(Randomer)
 
-func TestCreate(t *testing.T) {
-	r := setupRandomer(nil)
+				Expect(r).NotTo(BeNil())
+			})
 
-	if r == nil {
-		t.Fail()
-	}
-}
+			It("Should be able to return a string when calling Random method", func() {
+				r := new(Randomer)
 
-func TestICanGetSettings(t *testing.T) {
-	s := randomer.NewSetting()
-	r := setupRandomer(s)
+				str := r.Random()
 
-	gs := r.GetSettings()
+				Expect(str).NotTo(BeZero())
+			})
 
-	if gs == nil {
-		t.Fail()
-	}
-}
+			It("Should be able to return a unique string when calling Random method twice", func() {
+				r := new(Randomer)
 
-func TestICanGetSettingsIPassedIn(t *testing.T) {
-	s := randomer.NewSetting()
+				str1 := r.Random()
+				str2 := r.Random()
 
-	testChars := "ABCD"
-
-	s.SetCharacters(testChars)
-	r := setupRandomer(s)
-
-	gs := r.GetSettings()
-	if gs == nil {
-		t.Fail()
-	}
-
-	if gs.GetCharacters() != testChars {
-		t.Fail()
-	}
-}
-
-func TestICanGetADefaultRandomStringOfTenCharacters(t *testing.T) {
-	r := setupRandomer(nil)
-
-	randomString := r.GetRandomString()
-
-	if len(randomString) != 10 {
-		t.Fail()
-	}
-}
+				Expect(str1).NotTo(Equal(str2))
+			})
+		})
+	})
+})
